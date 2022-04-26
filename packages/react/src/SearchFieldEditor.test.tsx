@@ -15,7 +15,7 @@ describe('SearchFieldEditor', () => {
       fields: ['name'],
     };
 
-    render(<SearchFieldEditor search={currSearch} visible={false} onOk={jest.fn()} onCancel={jest.fn()} />);
+    render(<SearchFieldEditor search={currSearch} visible={false} onOk={vi.fn()} onCancel={vi.fn()} />);
 
     expect(screen.queryByText('OK')).toBeNull();
   });

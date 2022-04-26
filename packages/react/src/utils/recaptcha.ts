@@ -6,7 +6,7 @@ import { createScriptTag } from '../utils';
  * @param siteKey The reCAPTCHA site key, available from the reCAPTCHA admin page.
  */
 export function initRecaptcha(siteKey: string): void {
-  if (typeof grecaptcha === 'undefined') {
+  if (!('grecaptcha' in window)) {
     createScriptTag('https://www.google.com/recaptcha/api.js?render=' + siteKey);
   }
 }
@@ -17,6 +17,7 @@ export function initRecaptcha(siteKey: string): void {
  * @returns Promise to a recaptcha token for the current user.
  */
 export function getRecaptcha(siteKey: string): Promise<string> {
+  const grecaptcha = (window as any)['grecaptcha'];
   return new Promise((resolve, reject) => {
     grecaptcha.ready(async () => {
       try {

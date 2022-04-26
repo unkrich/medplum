@@ -2,7 +2,7 @@ import { MedplumClient } from '@medplum/core';
 import { MockClient } from '@medplum/mock';
 import { MedplumProvider } from '@medplum/react';
 import { act, fireEvent, render, screen } from '@testing-library/react';
-import crypto from 'crypto';
+import { webcrypto } from 'crypto';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import { TextEncoder } from 'util';
@@ -27,13 +27,13 @@ describe('RegisterPage', () => {
     });
 
     Object.defineProperty(global, 'crypto', {
-      value: crypto.webcrypto,
+      value: webcrypto,
     });
   });
 
   test('Renders', async () => {
     const medplum = new MockClient();
-    medplum.getProfile = jest.fn(() => undefined) as any;
+    medplum.getProfile = vi.fn(() => undefined) as any;
     await setup(medplum);
     expect(screen.getByRole('button', { name: 'Create account' })).toBeInTheDocument();
   });
@@ -46,8 +46,8 @@ describe('RegisterPage', () => {
 
   test('Submit success', async () => {
     const medplum = new MockClient();
-    medplum.getProfile = jest.fn(() => undefined) as any;
-    medplum.startNewUser = jest.fn(() => Promise.resolve({ login: '1' }));
+    medplum.getProfile = vi.fn(() => undefined) as any;
+    medplum.startNewUser = vi.fn(() => Promise.resolve({ login: '1' }));
     await setup(medplum);
 
     Object.defineProperty(global, 'grecaptcha', {

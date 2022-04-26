@@ -21,7 +21,7 @@ describe('TimingInput', () => {
   });
 
   test('Cancel', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     render(<TimingInput name="example" onChange={onChange} />);
     expect(screen.getByText('Edit')).toBeDefined();
@@ -38,7 +38,7 @@ describe('TimingInput', () => {
   });
 
   test('Change start', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     render(<TimingInput name="example" onChange={onChange} />);
     expect(screen.getByText('Edit')).toBeDefined();
@@ -61,7 +61,7 @@ describe('TimingInput', () => {
   });
 
   test('Change period', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     render(<TimingInput name="example" onChange={onChange} />);
     expect(screen.getByText('Edit')).toBeDefined();
@@ -84,7 +84,7 @@ describe('TimingInput', () => {
   });
 
   test('Change day of week', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     render(<TimingInput name="example" onChange={onChange} />);
     expect(screen.getByText('Edit')).toBeDefined();

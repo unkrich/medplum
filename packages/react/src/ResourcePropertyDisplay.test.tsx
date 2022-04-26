@@ -399,7 +399,7 @@ describe('ResourcePropertyDisplay', () => {
 
   test('Handles unknown property', () => {
     expect.assertions(2);
-    console.error = jest.fn();
+    console.error = vi.fn();
     try {
       render(<ResourcePropertyDisplay propertyType={PropertyType.BackboneElement} value={{}} />);
     } catch (err) {

@@ -2,9 +2,10 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "rootDir": "src",
+    "module": "esnext",
+    "outDir": "dist/types",
     "lib": ["esnext", "dom", "dom.iterable"],
-    "emitDeclarationOnly": true,
-    "resolveJsonModule": true
+    "types": ["vite/client", "vitest/globals"]
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"]
 }

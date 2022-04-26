@@ -30,7 +30,7 @@ describe('QuestionnaireForm', () => {
       questionnaire: {
         resourceType: 'Questionnaire',
       },
-      onSubmit: jest.fn(),
+      onSubmit: vi.fn(),
     });
     expect(screen.getByTestId('questionnaire-form')).toBeInTheDocument();
   });
@@ -47,13 +47,13 @@ describe('QuestionnaireForm', () => {
           },
         ],
       },
-      onSubmit: jest.fn(),
+      onSubmit: vi.fn(),
     });
     expect(screen.getByText('Hello world')).toBeInTheDocument();
   });
 
   test('Groups', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
 
     await setup({
       questionnaire: {
@@ -146,7 +146,7 @@ describe('QuestionnaireForm', () => {
   });
 
   test('Handles submit', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
 
     await setup({
       questionnaire: {
@@ -261,7 +261,7 @@ describe('QuestionnaireForm', () => {
           },
         ],
       },
-      onSubmit: jest.fn(),
+      onSubmit: vi.fn(),
     });
 
     const input = screen.getByLabelText('q1') as HTMLInputElement;
@@ -290,7 +290,7 @@ describe('QuestionnaireForm', () => {
           },
         ],
       },
-      onSubmit: jest.fn(),
+      onSubmit: vi.fn(),
     });
 
     const input = screen.getByLabelText('q1') as HTMLInputElement;
@@ -304,7 +304,7 @@ describe('QuestionnaireForm', () => {
   });
 
   test('Choice input', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
 
     await setup({
       questionnaire: {
@@ -358,7 +358,7 @@ describe('QuestionnaireForm', () => {
   });
 
   test('Choice valueReference default value', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
 
     await setup({
       questionnaire: {
@@ -428,7 +428,7 @@ describe('QuestionnaireForm', () => {
           },
         ],
       },
-      onSubmit: jest.fn(),
+      onSubmit: vi.fn(),
     });
 
     expect(screen.getByText('q1')).toBeInTheDocument();
@@ -473,7 +473,7 @@ describe('QuestionnaireForm', () => {
       ],
     };
 
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
 
     await setup({ questionnaire, onSubmit });
 
@@ -497,7 +497,7 @@ describe('QuestionnaireForm', () => {
   });
 
   test('Reference input', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
 
     await setup({
       questionnaire: {
@@ -524,7 +524,7 @@ describe('QuestionnaireForm', () => {
   });
 
   test('Drop down choice input', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
 
     await setup({
       questionnaire: {
@@ -596,7 +596,7 @@ describe('QuestionnaireForm', () => {
   });
 
   test('Drop down choice input default value', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
 
     await setup({
       questionnaire: {
@@ -682,7 +682,7 @@ describe('QuestionnaireForm', () => {
           },
         ],
       },
-      onSubmit: jest.fn(),
+      onSubmit: vi.fn(),
     });
 
     // The form should render

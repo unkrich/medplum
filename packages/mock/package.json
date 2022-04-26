@@ -1,5 +1,6 @@
 {
   "name": "@medplum/mock",
+  "type": "module",
   "version": "0.10.2",
   "description": "Medplum Mock Client",
   "author": "Medplum <hello@medplum.com>",
@@ -13,8 +14,9 @@
   "scripts": {
     "clean": "rimraf dist",
     "build": "npm run clean && tsc && npm run rollup",
-    "rollup": "rollup --config rollup.config.mjs",
-    "test": "jest"
+    "rollup": "rollup --config rollup.config.js",
+    "build:vite": "vite build && tsc",
+    "test": "vitest run"
   },
   "devDependencies": {
     "@medplum/core": "0.10.2",
@@ -35,8 +37,10 @@
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "exports": {
-    "require": "./dist/cjs/index.js",
-    "import": "./dist/esm/index.js"
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js"
+    }
   },
   "types": "dist/types/index.d.ts",
   "sideEffects": false,

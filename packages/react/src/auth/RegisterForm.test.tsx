@@ -149,7 +149,7 @@ describe('RegisterForm', () => {
   });
 
   test('Register new project success', async () => {
-    const onSuccess = jest.fn();
+    const onSuccess = vi.fn();
 
     await setup({
       type: 'project',
@@ -200,7 +200,7 @@ describe('RegisterForm', () => {
 
   test('Register new patient success', async () => {
     const projectId = randomUUID();
-    const onSuccess = jest.fn();
+    const onSuccess = vi.fn();
 
     await setup({
       type: 'patient',
@@ -248,16 +248,16 @@ describe('RegisterForm', () => {
     const google = {
       accounts: {
         id: {
-          initialize: jest.fn((args: any) => {
+          initialize: vi.fn((args: any) => {
             callback = args.callback;
           }),
-          renderButton: jest.fn((parent: HTMLElement) => {
+          renderButton: vi.fn((parent: HTMLElement) => {
             const button = document.createElement('div');
             button.innerHTML = 'Sign in with Google';
             button.addEventListener('click', () => google.accounts.id.prompt());
             parent.appendChild(button);
           }),
-          prompt: jest.fn(() => {
+          prompt: vi.fn(() => {
             if (callback) {
               callback({
                 clientId,
@@ -276,7 +276,7 @@ describe('RegisterForm', () => {
 
     (window as any).google = google;
 
-    const onSuccess = jest.fn();
+    const onSuccess = vi.fn();
 
     await act(async () => {
       await setup({

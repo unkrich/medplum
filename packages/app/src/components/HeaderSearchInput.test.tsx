@@ -4,10 +4,11 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 import { randomUUID } from 'crypto';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
+import { vi } from 'vitest';
 import { HeaderSearchInput } from './HeaderSearchInput';
 
 const medplum = new MockClient();
-medplum.graphql = jest.fn((query: string) => {
+medplum.graphql = vi.fn((query: string) => {
   const data: Record<string, unknown> = {};
   if (query.includes('"Simpson"')) {
     data.Patients1 = [HomerSimpson];
@@ -88,14 +89,11 @@ function setup(): void {
 
 describe('HeaderSearchInput', () => {
   beforeEach(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
   });
 
   afterEach(async () => {
-    await act(async () => {
-      jest.runOnlyPendingTimers();
-    });
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   test('Renders empty', () => {
@@ -105,7 +103,7 @@ describe('HeaderSearchInput', () => {
 
   test('Use autocomplete', async () => {
     setup();
-
+    
     const input = screen.getByRole('searchbox') as HTMLInputElement;
 
     // Enter "Simpson"
@@ -115,7 +113,7 @@ describe('HeaderSearchInput', () => {
 
     // Wait for the drop down
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
 
     // Press the down arrow
@@ -143,7 +141,7 @@ describe('HeaderSearchInput', () => {
 
     // Wait for the drop down
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
 
     // Press the down arrow
@@ -172,7 +170,7 @@ describe('HeaderSearchInput', () => {
 
     // Wait for the drop down
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
 
     // Press the down arrow
@@ -200,7 +198,7 @@ describe('HeaderSearchInput', () => {
 
     // Wait for the drop down
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
 
     // Press the down arrow
@@ -225,7 +223,7 @@ describe('HeaderSearchInput', () => {
 
     // Wait for the drop down
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
 
     // Press the down arrow
@@ -250,7 +248,7 @@ describe('HeaderSearchInput', () => {
 
     // Wait for the drop down
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
 
     // Press the down arrow

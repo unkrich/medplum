@@ -25,7 +25,7 @@ describe('PlanDefinitionBuilder', () => {
       value: {
         resourceType: 'PlanDefinition',
       },
-      onSubmit: jest.fn(),
+      onSubmit: vi.fn(),
     });
     expect(screen.getByTestId('questionnaire-form')).toBeDefined();
   });
@@ -33,7 +33,7 @@ describe('PlanDefinitionBuilder', () => {
   test('Render existing', async () => {
     await setup({
       value: ExampleWorkflowPlanDefinition,
-      onSubmit: jest.fn(),
+      onSubmit: vi.fn(),
     });
 
     expect(screen.getByText('Patient Registration (questionnaire)')).toBeDefined();
@@ -51,7 +51,7 @@ describe('PlanDefinitionBuilder', () => {
           },
         ],
       },
-      onSubmit: jest.fn(),
+      onSubmit: vi.fn(),
     });
 
     expect(screen.getByTestId('action1')).not.toHaveClass('hovering');
@@ -70,7 +70,7 @@ describe('PlanDefinitionBuilder', () => {
   });
 
   test('Handles submit', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
 
     await setup({
       value: ExampleWorkflowPlanDefinition,
@@ -87,7 +87,7 @@ describe('PlanDefinitionBuilder', () => {
   });
 
   test('Change plan title', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
 
     await setup({
       value: {
@@ -115,7 +115,7 @@ describe('PlanDefinitionBuilder', () => {
   });
 
   test('Change action title', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
 
     await setup({
       value: {
@@ -152,7 +152,7 @@ describe('PlanDefinitionBuilder', () => {
   });
 
   test('Add appointment action', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
 
     await setup({
       value: {
@@ -192,7 +192,7 @@ describe('PlanDefinitionBuilder', () => {
   });
 
   test('Add lab action', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
 
     await setup({
       value: {
@@ -232,7 +232,7 @@ describe('PlanDefinitionBuilder', () => {
   });
 
   test('Add questionnaire action', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
 
     await setup({
       value: {
@@ -272,7 +272,7 @@ describe('PlanDefinitionBuilder', () => {
   });
 
   test('Add task action', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
 
     await setup({
       value: {
@@ -312,7 +312,7 @@ describe('PlanDefinitionBuilder', () => {
   });
 
   test('Remove action', async () => {
-    const onSubmit = jest.fn();
+    const onSubmit = vi.fn();
 
     await setup({
       value: {

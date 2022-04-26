@@ -4,6 +4,7 @@ import { MedplumProvider } from '@medplum/react';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
+import { vi } from 'vitest';
 import { AppRoutes } from './AppRoutes';
 import { getDefaultFields } from './HomePage';
 
@@ -83,7 +84,7 @@ describe('HomePage', () => {
   });
 
   test('Delete button, cancel', async () => {
-    window.confirm = jest.fn(() => false);
+    window.confirm = vi.fn(() => false);
 
     await setup();
     await waitFor(() => screen.getByText('Delete...'));
@@ -100,7 +101,7 @@ describe('HomePage', () => {
       resourceType: 'Patient',
     });
 
-    window.confirm = jest.fn(() => true);
+    window.confirm = vi.fn(() => true);
 
     await setup('/Patient', medplum);
 
@@ -129,9 +130,8 @@ describe('HomePage', () => {
   });
 
   test('Export button', async () => {
-    // window.confirm = jest.fn(() => false);
-    window.URL.createObjectURL = jest.fn(() => 'blob:http://localhost/blob');
-    window.open = jest.fn();
+    window.URL.createObjectURL = vi.fn(() => 'blob:http://localhost/blob');
+    window.open = vi.fn();
 
     await setup();
     await waitFor(() => screen.getByText('Export...'));
@@ -174,7 +174,7 @@ describe('HomePage', () => {
   });
 
   test('Left click on row', async () => {
-    window.open = jest.fn();
+    window.open = vi.fn();
 
     await setup('/Patient');
     await waitFor(() => screen.getByTestId('search-control'));
@@ -191,7 +191,7 @@ describe('HomePage', () => {
   });
 
   test('Middle click on row', async () => {
-    window.open = jest.fn();
+    window.open = vi.fn();
 
     await setup('/Patient');
     await waitFor(() => screen.getByTestId('search-control'));

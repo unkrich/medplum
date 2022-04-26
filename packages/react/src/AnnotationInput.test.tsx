@@ -33,7 +33,7 @@ describe('AnnotationInput', () => {
   });
 
   test('Set value', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     setup({
       name: 'a',
@@ -71,7 +71,7 @@ describe('AnnotationInput', () => {
   });
 
   test('Clear value', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     setup({
       name: 'a',

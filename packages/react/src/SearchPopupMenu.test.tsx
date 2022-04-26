@@ -17,9 +17,9 @@ describe('SearchPopupMenu', () => {
       visible: true,
       x: 0,
       y: 0,
-      onPrompt: jest.fn(),
-      onChange: jest.fn(),
-      onClose: jest.fn(),
+      onPrompt: vi.fn(),
+      onChange: vi.fn(),
+      onClose: vi.fn(),
       ...partialProps,
     } as SearchPopupMenuProps;
 
@@ -89,7 +89,7 @@ describe('SearchPopupMenu', () => {
 
   test('Date submenu prompt', async () => {
     const searchParam = globalSchema.types['Patient']?.searchParams?.['birthdate'] as SearchParameter;
-    const onPrompt = jest.fn();
+    const onPrompt = vi.fn();
 
     setup({
       search: {
@@ -265,7 +265,7 @@ describe('SearchPopupMenu', () => {
 
   test('Quantity submenu prompt', async () => {
     const searchParam = globalSchema.types['Observation']?.searchParams?.['value-quantity'] as SearchParameter;
-    const onPrompt = jest.fn();
+    const onPrompt = vi.fn();
 
     setup({
       search: {
@@ -399,7 +399,7 @@ describe('SearchPopupMenu', () => {
 
   test('Reference submenu prompt', async () => {
     const searchParam = globalSchema.types['Patient']?.searchParams?.['organization'] as SearchParameter;
-    const onPrompt = jest.fn();
+    const onPrompt = vi.fn();
 
     setup({
       search: {
@@ -536,7 +536,7 @@ describe('SearchPopupMenu', () => {
 
   test('Text submenu prompt', async () => {
     const searchParam = globalSchema.types['Patient']?.searchParams?.['name'] as SearchParameter;
-    const onPrompt = jest.fn();
+    const onPrompt = vi.fn();
 
     setup({
       search: {

@@ -40,7 +40,7 @@ describe('OAuthPage', () => {
   test('Success', async () => {
     Object.defineProperty(window, 'location', {
       writable: true,
-      value: { assign: jest.fn() },
+      value: { assign: vi.fn() },
     });
 
     await setup(

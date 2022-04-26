@@ -99,7 +99,7 @@ describe('AttachmentButton', () => {
   });
 
   test('Error handling', async () => {
-    window.alert = jest.fn();
+    window.alert = vi.fn();
 
     setup(<AttachmentButton onUpload={console.log}>{(props) => <Button {...props}>Upload</Button>}</AttachmentButton>);
 

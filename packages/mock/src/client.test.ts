@@ -19,6 +19,7 @@ import {
 } from '@medplum/fhirtypes';
 import { randomUUID, webcrypto } from 'crypto';
 import { TextEncoder } from 'util';
+import { vi } from 'vitest';
 import { MockClient } from './client';
 import { HomerSimpson } from './mocks';
 
@@ -262,7 +263,7 @@ describe('MockClient', () => {
   });
 
   test('Debug mode', async () => {
-    console.log = jest.fn();
+    console.log = vi.fn();
     const client = new MockClient({ debug: true });
     await client.get('not-found');
     expect(console.log).toHaveBeenCalled();
@@ -297,7 +298,7 @@ describe('MockClient', () => {
     const result = await client.createPdf({ content: ['Hello World'] });
     expect(result).toBeDefined();
 
-    console.log = jest.fn();
+    console.log = vi.fn();
     const client2 = new MockClient({ debug: true });
     const result2 = await client2.createPdf({ content: ['Hello World'] });
     expect(result2).toBeDefined();

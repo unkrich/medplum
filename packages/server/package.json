@@ -16,7 +16,7 @@
     "prestart": "tsc",
     "start": "node dist/index.js",
     "dev": "ts-node-dev --poll --respawn --transpile-only src/index.ts",
-    "test": "jest --runInBand"
+    "test": "vitest run"
   },
   "dependencies": {
     "@aws-sdk/client-lambda": "3.188.0",
@@ -43,7 +43,7 @@
     "ioredis": "5.2.3",
     "jose": "4.10.0",
     "jszip": "3.10.1",
-    "node-fetch": "2.6.7",
+    "node-fetch": "3.2.10",
     "nodemailer": "6.8.0",
     "pg": "8.8.0",
     "validator": "13.7.0"

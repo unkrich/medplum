@@ -21,7 +21,7 @@ describe('ErrorBoundary', () => {
   });
 
   test('Handles error', () => {
-    console.error = jest.fn();
+    console.error = vi.fn();
     render(
       <div>
         <div>outside</div>

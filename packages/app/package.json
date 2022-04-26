@@ -18,7 +18,10 @@
     "debug": "webpack --mode development",
     "start": "http-server dist --port 3000 --proxy http://localhost:3000?",
     "test": "jest",
-    "source-map-explorer": "source-map-explorer dist/**/*.js --gzip"
+    "source-map-explorer": "source-map-explorer dist/**/*.js --gzip",
+    "vite:dev": "vite",
+    "vite:build": "vite build && tsc",
+    "vite:test": "vitest run"
   },
   "devDependencies": {
     "@emotion/react": "11.10.4",
@@ -33,6 +36,7 @@
     "@tabler/icons": "1.104.0",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "13.4.0",
+    "@small-tech/vite-plugin-sri": "1.0.1",
     "@types/grecaptcha": "3.0.4",
     "@types/react": "18.0.21",
     "@types/react-dom": "18.0.6",
@@ -44,7 +48,6 @@
     "html-webpack-plugin": "5.5.0",
     "http-server": "14.1.1",
     "identity-obj-proxy": "3.0.0",
-    "mini-css-extract-plugin": "2.6.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-router-dom": "6.4.2",

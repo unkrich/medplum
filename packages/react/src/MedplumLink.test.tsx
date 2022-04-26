@@ -75,7 +75,7 @@ describe('MedplumLink', () => {
   });
 
   test('Handles click with onClick', () => {
-    const onClick = jest.fn();
+    const onClick = vi.fn();
     setup(
       <MedplumLink to="xyz" onClick={onClick}>
         test

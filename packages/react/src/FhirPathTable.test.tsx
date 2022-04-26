@@ -139,7 +139,7 @@ describe('FhirPathTable', () => {
   });
 
   test('Bulk button', async () => {
-    const onBulk = jest.fn();
+    const onBulk = vi.fn();
 
     await setup({
       resourceType: 'ServiceRequest',
@@ -164,8 +164,8 @@ describe('FhirPathTable', () => {
       resourceType: 'ServiceRequest',
       query,
       fields,
-      onClick: jest.fn(),
-      onAuxClick: jest.fn(),
+      onClick: vi.fn(),
+      onAuxClick: vi.fn(),
     };
 
     await setup(props);
@@ -192,8 +192,8 @@ describe('FhirPathTable', () => {
       resourceType: 'ServiceRequest',
       query,
       fields,
-      onClick: jest.fn(),
-      onAuxClick: jest.fn(),
+      onClick: vi.fn(),
+      onAuxClick: vi.fn(),
     };
 
     await setup(props);

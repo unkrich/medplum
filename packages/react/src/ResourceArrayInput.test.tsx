@@ -63,7 +63,7 @@ describe('ResourceArrayInput', () => {
   });
 
   test('Change value', async () => {
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     render(<ResourceArrayInput property={property} name="myProp" defaultValue={['foo', 'bar']} onChange={onChange} />);
 

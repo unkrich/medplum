@@ -23,8 +23,8 @@ if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
 }
 
 const medplum = new MedplumClient({
-  baseUrl: process.env.MEDPLUM_BASE_URL as string,
-  clientId: process.env.MEDPLUM_CLIENT_ID as string,
+  baseUrl: import.meta.env.VITE_MEDPLUM_BASE_URL as string,
+  clientId: import.meta.env.VITE_MEDPLUM_CLIENT_ID as string,
   onUnauthenticated: () => (window.location.href = '/signin'),
 });
 

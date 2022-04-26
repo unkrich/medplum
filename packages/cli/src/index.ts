@@ -1,5 +1,4 @@
-#!/usr/bin/env node
-import { MedplumClient, normalizeErrorString } from '@medplum/core';
+import { MedplumClient } from '@medplum/core';
 import { Bot, OperationOutcome } from '@medplum/fhirtypes';
 import dotenv from 'dotenv';
 import { existsSync, readFileSync } from 'fs';

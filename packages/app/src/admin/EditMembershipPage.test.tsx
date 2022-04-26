@@ -33,14 +33,14 @@ describe('EditMembershipPage', () => {
       },
     });
 
-    jest.useFakeTimers();
+    vi.useFakeTimers();
   });
 
   afterEach(async () => {
     await act(async () => {
-      jest.runOnlyPendingTimers();
+      vi.runOnlyPendingTimers();
     });
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   test('Renders', async () => {
@@ -79,7 +79,7 @@ describe('EditMembershipPage', () => {
 
     // Wait for the drop down
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
 
     // Press the down arrow
@@ -115,7 +115,7 @@ describe('EditMembershipPage', () => {
 
     // Wait for the drop down
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
 
     // Press the down arrow
@@ -136,7 +136,7 @@ describe('EditMembershipPage', () => {
   });
 
   test('Submit with admin', async () => {
-    const medplumPostSpy = jest.spyOn(medplum, 'post');
+    const medplumPostSpy = vi.spyOn(medplum, 'post');
 
     await setup('/admin/members/456');
     await waitFor(() => screen.getByText('Save'));
@@ -164,7 +164,7 @@ describe('EditMembershipPage', () => {
   });
 
   test('Remove admin', async () => {
-    const medplumPostSpy = jest.spyOn(medplum, 'post');
+    const medplumPostSpy = vi.spyOn(medplum, 'post');
 
     await setup('/admin/members/456');
     await waitFor(() => screen.getByText('Save'));
@@ -204,7 +204,7 @@ describe('EditMembershipPage', () => {
     expect(screen.getByText('Remove user')).toBeInTheDocument();
 
     await act(async () => {
-      window.confirm = jest.fn(() => true);
+      window.confirm = vi.fn(() => true);
       fireEvent.click(screen.getByText('Remove user'));
     });
 
@@ -218,7 +218,7 @@ describe('EditMembershipPage', () => {
     expect(screen.getByText('Remove user')).toBeInTheDocument();
 
     await act(async () => {
-      window.confirm = jest.fn(() => false);
+      window.confirm = vi.fn(() => false);
       fireEvent.click(screen.getByText('Remove user'));
     });
 

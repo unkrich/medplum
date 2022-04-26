@@ -115,7 +115,7 @@ describe('ResourceTimeline', () => {
     await setup({
       value: HomerEncounter,
       buildSearchRequests: buildEncounterSearch,
-      createCommunication: jest.fn(),
+      createCommunication: vi.fn(),
       createMedia: (resource: Encounter, operator: ProfileResource, content: Attachment) => ({
         resourceType: 'Media',
         encounter: createReference(resource),

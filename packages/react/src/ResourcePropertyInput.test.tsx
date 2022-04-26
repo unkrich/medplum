@@ -46,7 +46,7 @@ describe('ResourcePropertyInput', () => {
       ],
     };
 
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     await setup({
       name: 'active',
@@ -71,7 +71,7 @@ describe('ResourcePropertyInput', () => {
       ],
     };
 
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     await setup({
       name: 'date',
@@ -96,7 +96,7 @@ describe('ResourcePropertyInput', () => {
       ],
     };
 
-    const onChange = jest.fn();
+    const onChange = vi.fn();
     const localString = convertIsoToLocal('2021-01-01T12:00:00Z');
     const isoString = convertLocalToIso(localString);
 
@@ -123,7 +123,7 @@ describe('ResourcePropertyInput', () => {
       ],
     };
 
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     await setup({
       name: 'markdown',
@@ -205,7 +205,7 @@ describe('ResourcePropertyInput', () => {
       title: 'hello.txt',
     };
 
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     await setup({
       name: 'content',
@@ -249,7 +249,7 @@ describe('ResourcePropertyInput', () => {
       },
     ];
 
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     await setup({
       name: 'photo',
@@ -343,7 +343,7 @@ describe('ResourcePropertyInput', () => {
       },
     ];
 
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     await setup({
       name: 'extension',
@@ -403,7 +403,7 @@ describe('ResourcePropertyInput', () => {
       },
     ];
 
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     await setup({
       name: 'identifier',
@@ -437,7 +437,7 @@ describe('ResourcePropertyInput', () => {
       end: '2021-01-02T12:00:00.000Z',
     };
 
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     await setup({
       name: 'period',
@@ -472,7 +472,7 @@ describe('ResourcePropertyInput', () => {
       unit: 'mg',
     };
 
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     await setup({
       name: 'test',
@@ -507,7 +507,7 @@ describe('ResourcePropertyInput', () => {
       high: { value: 10, unit: 'mg' },
     };
 
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     await setup({
       name: 'test',
@@ -545,7 +545,7 @@ describe('ResourcePropertyInput', () => {
       denominator: { value: 10, unit: 'ml' },
     };
 
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     await setup({
       name: 'test',
@@ -591,7 +591,7 @@ describe('ResourcePropertyInput', () => {
       type: [{ code: 'Quantity' }, { code: 'string' }, { code: 'integer' }],
     };
 
-    const onChange = jest.fn();
+    const onChange = vi.fn();
 
     await setup({
       name: 'value[x]',

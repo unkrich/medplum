@@ -26,7 +26,7 @@ describe('FhirPathDisplay', () => {
   });
 
   test('Error on multiple values', () => {
-    console.error = jest.fn();
+    console.error = vi.fn();
     const patient: Patient = {
       resourceType: 'Patient',
       name: [
@@ -55,7 +55,7 @@ describe('FhirPathDisplay', () => {
   });
 
   test('Handles malformed date', () => {
-    console.warn = jest.fn();
+    console.warn = vi.fn();
     render(
       <FhirPathDisplay
         resource={{

@@ -1,5 +1,6 @@
 {
   "name": "@medplum/react",
+  "type": "module",
   "version": "0.10.2",
   "description": "Medplum React Component Library",
   "author": "Medplum <hello@medplum.com>",
@@ -14,8 +15,9 @@
     "clean": "rimraf dist storybook-static",
     "dev": "start-storybook -p 6006",
     "build": "npm run clean && npm run rollup",
-    "rollup": "rollup --config rollup.config.mjs",
-    "test": "jest",
+    "build:vite": "vite build && tsc",
+    "rollup": "rollup --config rollup.config.js",
+    "test": "vitest run",
     "storybook": "build-storybook"
   },
   "devDependencies": {
@@ -30,6 +32,7 @@
     "@storybook/addon-actions": "6.5.12",
     "@storybook/addon-essentials": "6.5.12",
     "@storybook/addon-links": "6.5.12",
+    "@storybook/builder-vite": "0.2.4",
     "@storybook/builder-webpack5": "6.5.12",
     "@storybook/manager-webpack5": "6.5.12",
     "@storybook/react": "6.5.12",

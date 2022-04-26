@@ -4,6 +4,7 @@ import { MedplumProvider, SmartSearchField } from '@medplum/react';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
+import { vi } from 'vitest';
 import { AppRoutes } from './AppRoutes';
 
 const query = `{
@@ -118,7 +119,7 @@ describe('SmartSearchPage', () => {
   });
 
   test('Left click on row', async () => {
-    window.open = jest.fn();
+    window.open = vi.fn();
 
     await setup(`/smart?resourceType=ServiceRequest&query=${query}&fields=${JSON.stringify(fields)}`);
     await waitFor(() => screen.getByTestId('search-control'));
@@ -135,7 +136,7 @@ describe('SmartSearchPage', () => {
   });
 
   test('Middle click on row', async () => {
-    window.open = jest.fn();
+    window.open = vi.fn();
 
     await setup(`/smart?resourceType=ServiceRequest&query=${query}&fields=${JSON.stringify(fields)}`);
     await waitFor(() => screen.getByTestId('search-control'));

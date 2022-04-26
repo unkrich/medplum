@@ -113,3 +113,7 @@ describe('Mock Repo', () => {
     expect(result1.length).toBeGreaterThanOrEqual(1);
   });
 });
+
+function fail(message: string): never {
+  throw new Error(message);
+}

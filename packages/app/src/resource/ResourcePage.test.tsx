@@ -29,14 +29,14 @@ describe('ResourcePage', () => {
   });
 
   beforeEach(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
   });
 
   afterEach(async () => {
     await act(async () => {
-      jest.runOnlyPendingTimers();
+      vi.runOnlyPendingTimers();
     });
-    jest.useRealTimers();
+    vi.useRealTimers();
   });
 
   test('Not found', async () => {
@@ -200,7 +200,7 @@ describe('ResourcePage', () => {
 
     expect(screen.getByText('Preview')).toBeInTheDocument();
 
-    window.alert = jest.fn();
+    window.alert = vi.fn();
     fireEvent.click(screen.getByText('OK'));
     expect(window.alert).toHaveBeenCalledWith('You submitted the preview');
   });
@@ -229,7 +229,7 @@ describe('ResourcePage', () => {
 
     // Wait for the drop down
     await act(async () => {
-      jest.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000);
     });
 
     // Press the down arrow
@@ -280,7 +280,7 @@ describe('ResourcePage', () => {
   });
 
   test('Left click on tab', async () => {
-    window.open = jest.fn();
+    window.open = vi.fn();
 
     await setup('/Practitioner/123/details');
 

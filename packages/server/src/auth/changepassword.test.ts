@@ -5,14 +5,15 @@ import express from 'express';
 import { pwnedPassword } from 'hibp';
 import fetch from 'node-fetch';
 import request from 'supertest';
+import { MockInstance } from 'vitest';
 import { initApp, shutdownApp } from '../app';
 import { loadTestConfig } from '../config';
 import { setupPwnedPasswordMock, setupRecaptchaMock } from '../test.setup';
 import { registerNew } from './register';
 
-jest.mock('@aws-sdk/client-sesv2');
-jest.mock('hibp');
-jest.mock('node-fetch');
+// vi.mock('@aws-sdk/client-sesv2');
+// vi.mock('hibp');
+// vi.mock('node-fetch');
 
 const app = express();
 
@@ -27,12 +28,12 @@ describe('Change Password', () => {
   });
 
   beforeEach(() => {
-    (SESv2Client as unknown as jest.Mock).mockClear();
-    (SendEmailCommand as unknown as jest.Mock).mockClear();
-    (fetch as unknown as jest.Mock).mockClear();
-    (pwnedPassword as unknown as jest.Mock).mockClear();
-    setupPwnedPasswordMock(pwnedPassword as unknown as jest.Mock, 0);
-    setupRecaptchaMock(fetch as unknown as jest.Mock, true);
+    (SESv2Client as unknown as MockInstance).mockClear();
+    (SendEmailCommand as unknown as MockInstance).mockClear();
+    (fetch as unknown as MockInstance).mockClear();
+    (pwnedPassword as unknown as MockInstance).mockClear();
+    setupPwnedPasswordMock(pwnedPassword as unknown as MockInstance, 0);
+    setupRecaptchaMock(fetch as unknown as MockInstance, true);
   });
 
   test('Success', async () => {
@@ -106,7 +107,7 @@ describe('Change Password', () => {
     });
 
     // Mock the pwnedPassword function to return "1", meaning the password is breached.
-    setupPwnedPasswordMock(pwnedPassword as unknown as jest.Mock, 1);
+    setupPwnedPasswordMock(pwnedPassword as unknown as MockInstance, 1);
 
     const res2 = await request(app)
       .post('/auth/changepassword')

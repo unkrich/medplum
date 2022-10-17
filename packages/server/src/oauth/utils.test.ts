@@ -2,7 +2,7 @@ import { ClientApplication, OperationOutcome } from '@medplum/fhirtypes';
 import { randomUUID } from 'crypto';
 import { initAppServices, shutdownApp } from '../app';
 import { loadTestConfig } from '../config';
-import { createTestClient } from '../test.setup';
+import { createTestClient, fail } from '../test.setup';
 import { tryLogin, validateLoginRequest } from './utils';
 
 let client: ClientApplication;

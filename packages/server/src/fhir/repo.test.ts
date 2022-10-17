@@ -20,13 +20,13 @@ import { randomUUID } from 'crypto';
 import { initAppServices, shutdownApp } from '../app';
 import { registerNew, RegisterRequest } from '../auth/register';
 import { loadTestConfig } from '../config';
-import { bundleContains } from '../test.setup';
+import { bundleContains, fail } from '../test.setup';
 import { processBatch } from './batch';
 import { getRepoForLogin, Repository, systemRepo } from './repo';
 import { parseSearchRequest } from './search';
 
-jest.mock('hibp');
-jest.mock('ioredis');
+vi.mock('hibp');
+vi.mock('ioredis');
 
 describe('FHIR Repo', () => {
   beforeAll(async () => {

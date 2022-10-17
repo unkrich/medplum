@@ -1,5 +1,6 @@
 import { OperationOutcomeError } from '@medplum/core';
 import { Patient, Questionnaire, Resource } from '@medplum/fhirtypes';
+import { fail } from '../test.setup';
 import { validateResourceWithJsonSchema } from './jsonschema';
 
 describe('FHIR JSONSchema', () => {

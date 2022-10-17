@@ -7,6 +7,7 @@ import {
   Patient,
   ServiceRequest,
 } from '@medplum/fhirtypes';
+import { fail } from 'assert';
 import { randomUUID } from 'crypto';
 import { initAppServices, shutdownApp } from '../app';
 import { loadTestConfig } from '../config';

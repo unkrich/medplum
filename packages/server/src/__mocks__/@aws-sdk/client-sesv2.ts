@@ -1,4 +1,4 @@
-export const SendEmailCommand = jest.fn(() => ({}));
-export const SESv2Client = jest.fn(() => ({
-  send: jest.fn(),
+export const SendEmailCommand = vi.fn(() => ({}));
+export const SESv2Client = vi.fn(() => ({
+  send: vi.fn(),
 }));

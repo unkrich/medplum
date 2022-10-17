@@ -1,6 +1,7 @@
 import { createReference } from '@medplum/core';
 import { Bundle, ClientApplication, Login, Project, ProjectMembership, Resource } from '@medplum/fhirtypes';
 import { randomUUID } from 'crypto';
+import { MockInstance } from 'vitest';
 import { systemRepo } from './fhir/repo';
 import { generateAccessToken } from './oauth/keys';
 
@@ -82,7 +83,7 @@ export async function initTestAuth(options?: Partial<Project>): Promise<string> 
  * @param pwnedPassword The pwnedPassword mock.
  * @param numPwns The mock value to return. Zero is a safe password.
  */
-export function setupPwnedPasswordMock(pwnedPassword: jest.Mock, numPwns: number): void {
+export function setupPwnedPasswordMock(pwnedPassword: MockInstance, numPwns: number): void {
   pwnedPassword.mockImplementation(async () => numPwns);
 }
 
@@ -91,7 +92,7 @@ export function setupPwnedPasswordMock(pwnedPassword: jest.Mock, numPwns: number
  * @param fetch The fetch mock.
  * @param success Whether the mock should return a successful response.
  */
-export function setupRecaptchaMock(fetch: jest.Mock, success: boolean): void {
+export function setupRecaptchaMock(fetch: MockInstance, success: boolean): void {
   fetch.mockImplementation(() => ({
     status: 200,
     json: () => ({ success }),
@@ -106,4 +107,8 @@ export function setupRecaptchaMock(fetch: jest.Mock, success: boolean): void {
  */
 export function bundleContains(bundle: Bundle, resource: Resource): boolean {
   return !!bundle.entry?.some((entry) => entry.resource?.id === resource.id);
+}
+
+export function fail(msg: string): never {
+  throw new Error(msg);
 }

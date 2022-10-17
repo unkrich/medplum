@@ -1,3 +1,4 @@
+import { fail } from 'assert';
 import { randomUUID } from 'crypto';
 import { generateKeyPair, SignJWT } from 'jose';
 import { initAppServices, shutdownApp } from '../app';

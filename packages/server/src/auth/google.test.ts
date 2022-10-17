@@ -7,23 +7,23 @@ import { systemRepo } from '../fhir/repo';
 import { getUserByEmail } from '../oauth/utils';
 import { registerNew } from './register';
 
-jest.mock('jose', () => {
-  const original = jest.requireActual('jose');
-  return {
-    ...original,
-    jwtVerify: jest.fn((credential: string) => {
-      if (credential === 'invalid') {
-        throw new Error('Verification failed');
-      }
-      return {
-        // By convention for tests, return the credential as the email
-        // Obviously in the real world the credential would be a JWT
-        // And the Google Auth service returns the corresponding email
-        payload: JSON.parse(credential),
-      };
-    }),
-  };
-});
+// vi.mock('jose', () => {
+//   const original = vi.requireActual('jose');
+//   return {
+//     ...original,
+//     jwtVerify: vi.fn((credential: string) => {
+//       if (credential === 'invalid') {
+//         throw new Error('Verification failed');
+//       }
+//       return {
+//         // By convention for tests, return the credential as the email
+//         // Obviously in the real world the credential would be a JWT
+//         // And the Google Auth service returns the corresponding email
+//         payload: JSON.parse(credential),
+//       };
+//     }),
+//   };
+// });
 
 const app = express();
 

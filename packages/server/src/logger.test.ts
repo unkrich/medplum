@@ -2,7 +2,7 @@ import { logger, LogLevel } from './logger';
 
 describe('Logger', () => {
   test('Debug', () => {
-    console.log = jest.fn();
+    console.log = vi.fn();
 
     logger.level = LogLevel.NONE;
     logger.debug('test');
@@ -14,7 +14,7 @@ describe('Logger', () => {
   });
 
   test('Info', () => {
-    console.log = jest.fn();
+    console.log = vi.fn();
 
     logger.level = LogLevel.NONE;
     logger.info('test');
@@ -26,7 +26,7 @@ describe('Logger', () => {
   });
 
   test('Warn', () => {
-    console.log = jest.fn();
+    console.log = vi.fn();
 
     logger.level = LogLevel.NONE;
     logger.warn('test');
@@ -38,7 +38,7 @@ describe('Logger', () => {
   });
 
   test('Error', () => {
-    console.log = jest.fn();
+    console.log = vi.fn();
 
     logger.level = LogLevel.NONE;
     logger.error('test');

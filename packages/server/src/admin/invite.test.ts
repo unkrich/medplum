@@ -5,14 +5,15 @@ import { pwnedPassword } from 'hibp';
 import { simpleParser } from 'mailparser';
 import fetch from 'node-fetch';
 import request from 'supertest';
+import { MockInstance } from 'vitest';
 import { initApp, shutdownApp } from '../app';
 import { registerNew } from '../auth/register';
 import { loadTestConfig } from '../config';
 import { setupPwnedPasswordMock, setupRecaptchaMock } from '../test.setup';
 
-jest.mock('@aws-sdk/client-sesv2');
-jest.mock('hibp');
-jest.mock('node-fetch');
+// vi.mock('@aws-sdk/client-sesv2');
+// vi.mock('hibp');
+// vi.mock('node-fetch');
 
 const app = express();
 
@@ -27,12 +28,12 @@ describe('Admin Invite', () => {
   });
 
   beforeEach(() => {
-    (SESv2Client as unknown as jest.Mock).mockClear();
-    (SendEmailCommand as unknown as jest.Mock).mockClear();
-    (fetch as unknown as jest.Mock).mockClear();
-    (pwnedPassword as unknown as jest.Mock).mockClear();
-    setupPwnedPasswordMock(pwnedPassword as unknown as jest.Mock, 0);
-    setupRecaptchaMock(fetch as unknown as jest.Mock, true);
+    (SESv2Client as unknown as MockInstance).mockClear();
+    (SendEmailCommand as unknown as MockInstance).mockClear();
+    (fetch as unknown as MockInstance).mockClear();
+    (pwnedPassword as unknown as MockInstance).mockClear();
+    setupPwnedPasswordMock(pwnedPassword as unknown as MockInstance, 0);
+    setupRecaptchaMock(fetch as unknown as MockInstance, true);
   });
 
   test('New user to project', async () => {
@@ -60,7 +61,7 @@ describe('Admin Invite', () => {
     expect(SESv2Client).toHaveBeenCalledTimes(1);
     expect(SendEmailCommand).toHaveBeenCalledTimes(1);
 
-    const args = (SendEmailCommand as unknown as jest.Mock).mock.calls[0][0];
+    const args = (SendEmailCommand as unknown as MockInstance).mock.calls[0][0];
     expect(args.Destination.ToAddresses[0]).toBe(bobEmail);
 
     const parsed = await simpleParser(args.Content.Raw.Data);
@@ -102,7 +103,7 @@ describe('Admin Invite', () => {
     expect(SESv2Client).toHaveBeenCalledTimes(1);
     expect(SendEmailCommand).toHaveBeenCalledTimes(1);
 
-    const args = (SendEmailCommand as unknown as jest.Mock).mock.calls[0][0];
+    const args = (SendEmailCommand as unknown as MockInstance).mock.calls[0][0];
     expect(args.Destination.ToAddresses[0]).toBe(bobEmail);
 
     const parsed = await simpleParser(args.Content.Raw.Data);

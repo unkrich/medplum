@@ -3,6 +3,7 @@ import { AuditEvent, Bot, Observation, Patient, Project, ProjectMembership, Subs
 import { Job } from 'bullmq';
 import { createHmac, randomUUID } from 'crypto';
 import fetch from 'node-fetch';
+import { MockInstance } from 'vitest';
 import { initAppServices, shutdownApp } from '../app';
 import { loadTestConfig } from '../config';
 import { getClient } from '../database';
@@ -10,7 +11,7 @@ import { Repository, systemRepo } from '../fhir/repo';
 import { createTestProject } from '../test.setup';
 import { closeSubscriptionWorker, execSubscriptionJob, getSubscriptionQueue } from './subscription';
 
-jest.mock('node-fetch');
+// vi.mock('node-fetch');
 
 let repo: Repository;
 let botRepo: Repository;
@@ -53,7 +54,7 @@ describe('Subscription Worker', () => {
 
   beforeEach(async () => {
     await getClient().query('DELETE FROM "Subscription"');
-    (fetch as unknown as jest.Mock).mockClear();
+    (fetch as unknown as MockInstance).mockClear();
   });
 
   test('Send subscriptions', async () => {
@@ -81,7 +82,7 @@ describe('Subscription Worker', () => {
     expect(patient).toBeDefined();
     expect(queue.add).toHaveBeenCalled();
 
-    (fetch as unknown as jest.Mock).mockImplementation(() => ({ status: 200 }));
+    (fetch as unknown as MockInstance).mockImplementation(() => ({ status: 200 }));
 
     const job = { id: 1, data: queue.add.mock.calls[0][1] } as unknown as Job;
     await execSubscriptionJob(job);
@@ -121,7 +122,7 @@ describe('Subscription Worker', () => {
     expect(patient).toBeDefined();
     expect(queue.add).toHaveBeenCalled();
 
-    (fetch as unknown as jest.Mock).mockImplementation(() => ({ status: 200 }));
+    (fetch as unknown as MockInstance).mockImplementation(() => ({ status: 200 }));
 
     const job = { id: 1, data: queue.add.mock.calls[0][1] } as unknown as Job;
     await execSubscriptionJob(job);
@@ -171,7 +172,7 @@ describe('Subscription Worker', () => {
     expect(patient).toBeDefined();
     expect(queue.add).toHaveBeenCalled();
 
-    (fetch as unknown as jest.Mock).mockImplementation(() => ({ status: 200 }));
+    (fetch as unknown as MockInstance).mockImplementation(() => ({ status: 200 }));
 
     const body = stringify(patient);
     const signature = createHmac('sha256', secret).update(body).digest('hex');
@@ -430,7 +431,7 @@ describe('Subscription Worker', () => {
     expect(patient).toBeDefined();
     expect(queue.add).toHaveBeenCalled();
 
-    (fetch as unknown as jest.Mock).mockImplementation(() => ({ status: 429 }));
+    (fetch as unknown as MockInstance).mockImplementation(() => ({ status: 429 }));
 
     const job = { id: 1, data: queue.add.mock.calls[0][1] } as unknown as Job;
 
@@ -463,7 +464,7 @@ describe('Subscription Worker', () => {
     expect(patient).toBeDefined();
     expect(queue.add).toHaveBeenCalled();
 
-    (fetch as unknown as jest.Mock).mockImplementation(() => {
+    (fetch as unknown as MockInstance).mockImplementation(() => {
       throw new Error();
     });
 
@@ -516,7 +517,7 @@ describe('Subscription Worker', () => {
     });
     expect(queue.add).toHaveBeenCalled();
 
-    (fetch as unknown as jest.Mock).mockImplementation(() => ({ status: 200 }));
+    (fetch as unknown as MockInstance).mockImplementation(() => ({ status: 200 }));
 
     const job = { id: 1, data: queue.add.mock.calls[0][1] } as unknown as Job;
     await execSubscriptionJob(job);
@@ -580,7 +581,7 @@ describe('Subscription Worker', () => {
     expect(patient).toBeDefined();
     expect(queue.add).toHaveBeenCalled();
 
-    (fetch as unknown as jest.Mock).mockImplementation(() => ({ status: 200 }));
+    (fetch as unknown as MockInstance).mockImplementation(() => ({ status: 200 }));
 
     const job = { id: 1, data: queue.add.mock.calls[0][1] } as unknown as Job;
     await execSubscriptionJob(job);
@@ -780,7 +781,7 @@ describe('Subscription Worker', () => {
     expect(patient).toBeDefined();
     expect(queue.add).toHaveBeenCalled();
 
-    (fetch as unknown as jest.Mock).mockImplementation(() => ({ status: 200 }));
+    (fetch as unknown as MockInstance).mockImplementation(() => ({ status: 200 }));
 
     const job = { id: 1, data: queue.add.mock.calls[0][1] } as unknown as Job;
     await execSubscriptionJob(job);

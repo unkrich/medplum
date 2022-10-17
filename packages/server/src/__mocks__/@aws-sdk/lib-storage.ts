@@ -1,3 +1,3 @@
-export const Upload = jest.fn(() => ({
-  done: jest.fn(),
+export const Upload = vi.fn(() => ({
+  done: vi.fn(),
 }));

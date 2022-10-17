@@ -3,7 +3,7 @@ import request from 'supertest';
 import { initApp, shutdownApp } from './app';
 import { loadTestConfig } from './config';
 
-jest.mock('ioredis');
+vi.mock('ioredis');
 
 const app = express();
 

@@ -5,12 +5,13 @@ import { mkdtempSync, rmSync } from 'fs';
 import fetch from 'node-fetch';
 import { sep } from 'path';
 import { Readable } from 'stream';
+import { MockInstance } from 'vitest';
 import { initAppServices, shutdownApp } from '../app';
 import { loadTestConfig } from '../config';
 import { Repository } from '../fhir/repo';
 import { closeDownloadWorker, execDownloadJob, getDownloadQueue } from './download';
 
-jest.mock('node-fetch');
+// vi.mock('node-fetch');
 
 const binaryDir = mkdtempSync(__dirname + sep + 'binary-');
 let repo: Repository;
@@ -35,7 +36,7 @@ describe('Download Worker', () => {
   });
 
   beforeEach(async () => {
-    (fetch as unknown as jest.Mock).mockClear();
+    (fetch as unknown as MockInstance).mockClear();
   });
 
   test('Download external URL', async () => {
@@ -59,7 +60,7 @@ describe('Download Worker', () => {
     body.push('foo');
     body.push(null);
 
-    (fetch as unknown as jest.Mock).mockImplementation(() => ({
+    (fetch as unknown as MockInstance).mockImplementation(() => ({
       status: 200,
       headers: {
         get(name: string): string | undefined {
@@ -111,7 +112,7 @@ describe('Download Worker', () => {
     expect(media).toBeDefined();
     expect(queue.add).toHaveBeenCalled();
 
-    (fetch as unknown as jest.Mock).mockImplementation(() => ({ status: 400 }));
+    (fetch as unknown as MockInstance).mockImplementation(() => ({ status: 400 }));
 
     const job = { id: 1, data: queue.add.mock.calls[0][1] } as unknown as Job;
 
@@ -136,7 +137,7 @@ describe('Download Worker', () => {
     expect(media).toBeDefined();
     expect(queue.add).toHaveBeenCalled();
 
-    (fetch as unknown as jest.Mock).mockImplementation(() => {
+    (fetch as unknown as MockInstance).mockImplementation(() => {
       throw new Error();
     });
 

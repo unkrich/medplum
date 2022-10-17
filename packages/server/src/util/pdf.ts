@@ -1,4 +1,3 @@
-import { assertOk } from '@medplum/core';
 import { Binary } from '@medplum/fhirtypes';
 import { resolve } from 'path';
 import PdfPrinter from 'pdfmake';
@@ -75,11 +74,10 @@ export async function createPdf(
   docDefinition.defaultStyle.lineHeight = docDefinition.defaultStyle.lineHeight || 2.0;
 
   const contentType = 'application/pdf';
-  const [outcome, binary] = await repo.createResource<Binary>({
+  const binary = await repo.createResource<Binary>({
     resourceType: 'Binary',
     contentType,
   });
-  assertOk(outcome, binary);
 
   // Setup the stream
   const stream = new PassThrough();

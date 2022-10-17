@@ -1,7 +1,7 @@
 import { loadTestConfig } from './config';
 import { closeRedis, getRedis, initRedis } from './redis';
 
-jest.mock('ioredis');
+vi.mock('ioredis');
 
 describe('Redis', () => {
   test('Get redis', async () => {

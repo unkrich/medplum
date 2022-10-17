@@ -4,14 +4,15 @@ import express from 'express';
 import { pwnedPassword } from 'hibp';
 import fetch from 'node-fetch';
 import request from 'supertest';
+import { MockInstance } from 'vitest';
 import { initApp, shutdownApp } from '../app';
 import { registerNew } from '../auth/register';
 import { loadTestConfig } from '../config';
 import { setupPwnedPasswordMock, setupRecaptchaMock } from '../test.setup';
 
-jest.mock('@aws-sdk/client-sesv2');
-jest.mock('hibp');
-jest.mock('node-fetch');
+// vi.mock('@aws-sdk/client-sesv2');
+// vi.mock('hibp');
+// vi.mock('node-fetch');
 
 const app = express();
 
@@ -26,12 +27,12 @@ describe('Project Admin routes', () => {
   });
 
   beforeEach(() => {
-    (SESv2Client as unknown as jest.Mock).mockClear();
-    (SendEmailCommand as unknown as jest.Mock).mockClear();
-    (fetch as unknown as jest.Mock).mockClear();
-    (pwnedPassword as unknown as jest.Mock).mockClear();
-    setupPwnedPasswordMock(pwnedPassword as unknown as jest.Mock, 0);
-    setupRecaptchaMock(fetch as unknown as jest.Mock, true);
+    (SESv2Client as unknown as MockInstance).mockClear();
+    (SendEmailCommand as unknown as MockInstance).mockClear();
+    (fetch as unknown as MockInstance).mockClear();
+    (pwnedPassword as unknown as MockInstance).mockClear();
+    setupPwnedPasswordMock(pwnedPassword as unknown as MockInstance, 0);
+    setupRecaptchaMock(fetch as unknown as MockInstance, true);
   });
 
   test('Get project and promote admin', async () => {

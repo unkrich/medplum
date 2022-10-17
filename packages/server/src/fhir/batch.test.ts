@@ -11,6 +11,7 @@ import {
 import { randomUUID } from 'crypto';
 import { initAppServices, shutdownApp } from '../app';
 import { loadTestConfig } from '../config';
+import { fail } from '../test.setup';
 import { processBatch } from './batch';
 import { Repository } from './repo';
 

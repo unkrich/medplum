@@ -12,7 +12,7 @@ describe('CORS', () => {
       header: () => undefined,
       path: '/',
     } as unknown as Request;
-    const callback = jest.fn();
+    const callback = vi.fn();
     corsOptions(req, callback);
     expect(callback).toBeCalledWith(null, { origin: false });
   });
@@ -22,7 +22,7 @@ describe('CORS', () => {
       header: () => undefined,
       path: '/fhir/R4/Patient',
     } as unknown as Request;
-    const callback = jest.fn();
+    const callback = vi.fn();
     corsOptions(req, callback);
     expect(callback).toBeCalledWith(null, { origin: false });
   });
@@ -32,7 +32,7 @@ describe('CORS', () => {
       header: () => 'http://localhost:3000',
       path: '/fhir/R4/Patient',
     } as unknown as Request;
-    const callback = jest.fn();
+    const callback = vi.fn();
     corsOptions(req, callback);
     expect(callback).toBeCalledWith(null, { credentials: true, origin: 'http://localhost:3000' });
   });
@@ -43,7 +43,7 @@ describe('CORS', () => {
       header: () => 'https://example.com',
       path: '/fhir/R4/Patient',
     } as unknown as Request;
-    const callback = jest.fn();
+    const callback = vi.fn();
     corsOptions(req, callback);
     expect(callback).toBeCalledWith(null, { credentials: true, origin: 'https://example.com' });
   });
@@ -53,7 +53,7 @@ describe('CORS', () => {
       header: () => 'https://example.com',
       path: '/fhir/R4/Patient',
     } as unknown as Request;
-    const callback = jest.fn();
+    const callback = vi.fn();
     corsOptions(req, callback);
     expect(callback).toBeCalledWith(null, { origin: false });
   });

@@ -17,8 +17,8 @@ import { registerNew } from './register';
 import { setPassword } from './setpassword';
 
 // vi.mock('@aws-sdk/client-sesv2');
-// vi.mock('hibp');
-// vi.mock('node-fetch');
+vi.mock('hibp');
+vi.mock('node-fetch');
 
 const app = express();
 const email = randomUUID() + '@example.com';

@@ -8,8 +8,8 @@ import { initApp, shutdownApp } from '../app';
 import { loadTestConfig } from '../config';
 import { setupPwnedPasswordMock, setupRecaptchaMock } from '../test.setup';
 
-// vi.mock('hibp');
-// vi.mock('node-fetch');
+vi.mock('hibp');
+vi.mock('node-fetch');
 
 const app = express();
 

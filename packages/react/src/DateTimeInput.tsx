@@ -90,5 +90,5 @@ export function convertLocalToIso(localString: string | undefined): string {
  * For example, it won't fire change events for <input type="datetime-local">.
  */
 function getInputType(): string {
-  return process.env.NODE_ENV === 'test' ? 'text' : 'datetime-local';
+  return import.meta.env.MODE === 'test' ? 'text' : 'datetime-local';
 }

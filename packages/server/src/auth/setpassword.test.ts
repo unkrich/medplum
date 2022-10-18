@@ -13,8 +13,8 @@ import { generateSecret } from '../oauth/keys';
 import { setupPwnedPasswordMock, setupRecaptchaMock } from '../test.setup';
 
 // vi.mock('@aws-sdk/client-sesv2');
-// vi.mock('hibp');
-// vi.mock('node-fetch');
+vi.mock('hibp');
+vi.mock('node-fetch');
 
 const app = express();
 

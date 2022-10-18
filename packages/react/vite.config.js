@@ -1,7 +1,6 @@
 import replace from '@rollup/plugin-replace';
 import react from '@vitejs/plugin-react';
 import dotenv from 'dotenv';
-import { writeFileSync } from 'fs';
 import { defineConfig } from 'vite';
 
 dotenv.config();
@@ -36,12 +35,12 @@ export default defineConfig({
       },
     }),
     react(),
-    {
-      closeBundle: () => {
-        writeFileSync('./dist/umd/package.json', '{"type": "commonjs"}');
-        writeFileSync('./dist/es/package.json', '{"type": "module"}');
-      },
-    },
+    // {
+    //   closeBundle: () => {
+    //     writeFileSync('./dist/umd/package.json', '{"type": "commonjs"}');
+    //     writeFileSync('./dist/es/package.json', '{"type": "module"}');
+    //   },
+    // },
   ],
   test: {
     globals: true,

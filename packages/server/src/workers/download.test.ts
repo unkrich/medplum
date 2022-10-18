@@ -11,7 +11,7 @@ import { loadTestConfig } from '../config';
 import { Repository } from '../fhir/repo';
 import { closeDownloadWorker, execDownloadJob, getDownloadQueue } from './download';
 
-// vi.mock('node-fetch');
+vi.mock('node-fetch');
 
 const binaryDir = mkdtempSync(__dirname + sep + 'binary-');
 let repo: Repository;

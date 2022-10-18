@@ -3,7 +3,7 @@ import { MockClient } from '@medplum/mock';
 import { vi } from 'vitest';
 import { main } from '.';
 
-vi.mock('fs');
+// vi.mock('fs');
 
 let medplum: MedplumClient;
 
@@ -38,22 +38,22 @@ describe('CLI', () => {
 
   test('Deploy bot not found', async () => {
     console.log = vi.fn();
-    const id = randomUUID();
+    // const id = randomUUID();
 
-    // Setup bot config
-    (fs.existsSync as unknown as jest.Mock).mockReturnValue(true);
-    (fs.readFileSync as unknown as jest.Mock).mockReturnValue(
-      JSON.stringify({
-        bots: [
-          {
-            name: 'hello-world',
-            id: id,
-            source: 'src/hello-world.ts',
-            dist: 'dist/hello-world.js',
-          },
-        ],
-      })
-    );
+    // // Setup bot config
+    // (fs.existsSync as unknown as MockInstance).mockReturnValue(true);
+    // (fs.readFileSync as unknown as MockInstance).mockReturnValue(
+    //   JSON.stringify({
+    //     bots: [
+    //       {
+    //         name: 'hello-world',
+    //         id: id,
+    //         source: 'src/hello-world.ts',
+    //         dist: 'dist/hello-world.js',
+    //       },
+    //     ],
+    //   })
+    // );
 
     await main(medplum, ['node', 'index.js', 'deploy-bot', 'does-not-exist']);
     expect(console.log).toBeCalledWith(expect.stringMatching('Bot does not exist'));

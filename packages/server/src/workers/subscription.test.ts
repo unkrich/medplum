@@ -11,7 +11,7 @@ import { Repository, systemRepo } from '../fhir/repo';
 import { createTestProject } from '../test.setup';
 import { closeSubscriptionWorker, execSubscriptionJob, getSubscriptionQueue } from './subscription';
 
-// vi.mock('node-fetch');
+vi.mock('node-fetch');
 
 let repo: Repository;
 let botRepo: Repository;

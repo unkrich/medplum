@@ -1,4 +1,4 @@
-import { MedplumClient } from '@medplum/core';
+import { MedplumClient, normalizeErrorString } from '@medplum/core';
 import { Bot, OperationOutcome } from '@medplum/fhirtypes';
 import dotenv from 'dotenv';
 import { existsSync, readFileSync } from 'fs';
@@ -116,6 +116,7 @@ function readConfig(): MedplumConfig | undefined {
 function readFileContents(fileName: string): string | undefined {
   const path = resolve(process.cwd(), fileName);
   if (!existsSync(path)) {
+    console.log('path', path);
     console.log('Error: File does not exist: ' + path);
     return '';
   }

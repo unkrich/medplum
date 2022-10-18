@@ -11,8 +11,8 @@ import { loadTestConfig } from '../config';
 import { systemRepo } from '../fhir/repo';
 import { setupPwnedPasswordMock, setupRecaptchaMock } from '../test.setup';
 
-// vi.mock('hibp');
-// vi.mock('node-fetch');
+vi.mock('hibp');
+vi.mock('node-fetch');
 
 const app = express();
 

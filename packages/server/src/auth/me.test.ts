@@ -27,8 +27,6 @@ describe('Me', () => {
   });
 
   beforeEach(async () => {
-    (fetch as unknown as MockInstance).mockClear();
-    (pwnedPassword as unknown as MockInstance).mockClear();
     setupPwnedPasswordMock(pwnedPassword as unknown as MockInstance, 0);
     setupRecaptchaMock(fetch as unknown as MockInstance, true);
   });

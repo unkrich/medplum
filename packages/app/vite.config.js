@@ -1,9 +1,9 @@
-import sri from '@small-tech/vite-plugin-sri';
+// import sri from '@small-tech/vite-plugin-sri';
 import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-  plugins: [react(), sri()],
+  plugins: [react()],
   build: {
     rollupOptions: {
       external: ['@medplum/core', '@medplum/mock', '@medplum/ui', 'react', 'react-dom', 'react-router-dom'],

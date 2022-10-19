@@ -1,6 +1,5 @@
 {
   "name": "@medplum/mock",
-  "type": "module",
   "version": "0.10.2",
   "description": "Medplum Mock Client",
   "author": "Medplum <hello@medplum.com>",

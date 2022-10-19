@@ -1,6 +1,5 @@
 {
   "name": "@medplum/react",
-  "type": "module",
   "version": "0.10.2",
   "description": "Medplum React Component Library",
   "author": "Medplum <hello@medplum.com>",
@@ -17,7 +16,7 @@
     "build": "npm run clean && npm run rollup",
     "build:vite": "vite build && tsc",
     "rollup": "rollup --config rollup.config.mjs",
-    "test": "vitest run",
+    "test": "vitest run src",
     "storybook": "build-storybook"
   },
   "devDependencies": {

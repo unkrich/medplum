@@ -1,5 +1,4 @@
 {
-  "type": "module",
   "name": "@medplum/app",
   "version": "0.10.2",
   "description": "Medplum App",
@@ -21,7 +20,7 @@
     "source-map-explorer": "source-map-explorer dist/**/*.js --gzip",
     "vite:dev": "vite",
     "build": "vite build && tsc",
-    "test": "vitest run"
+    "test": "vitest run src"
   },
   "devDependencies": {
     "@emotion/react": "11.10.4",

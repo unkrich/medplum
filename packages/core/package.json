@@ -1,6 +1,5 @@
 {
   "name": "@medplum/core",
-  "type": "module",
   "version": "0.10.2",
   "description": "Medplum TS/JS Library",
   "author": "Medplum <hello@medplum.com>",

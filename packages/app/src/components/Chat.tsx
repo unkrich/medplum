@@ -76,39 +76,53 @@ const useStyles = createStyles((theme) => ({
 
 export function Chat(): JSX.Element | null {
   const medplum = useMedplum();
-  const profile = medplum.getProfile() as ProfileResource;
-  const profileRefStr = profile && getReferenceString(profile);
   const { classes } = useStyles();
   const [open, setOpen] = useState(false);
   const [communications, setCommunications] = useState<Communication[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
 
-  const searchMessages = useCallback(async () => {
-    const searchResult = await medplum.searchResources('Communication', {
-      _sort: '-_lastUpdated',
-      status: 'completed',
-      sender: `${profileRefStr},${CHAT_GPT.reference}`,
-      recipient: `${profileRefStr},${CHAT_GPT.reference}`,
-    });
-    const newCommunications = [...communications];
+  const communicationsRef = useRef<Communication[]>();
+  communicationsRef.current = communications;
+
+  const scrollToBottom = useRef<boolean>(false);
+
+  async function searchMessages(): Promise<void> {
+    const profile = medplum.getProfile() as ProfileResource;
+    const profileRefStr = profile && getReferenceString(profile);
+    const searchResult = await medplum.searchResources(
+      'Communication',
+      {
+        _sort: '-_lastUpdated',
+        status: 'completed',
+        sender: `${profileRefStr},${CHAT_GPT.reference}`,
+        recipient: `${profileRefStr},${CHAT_GPT.reference}`,
+      },
+      { cache: 'no-cache' }
+    );
+    const newCommunications = [...(communicationsRef.current as Communication[])];
+    let foundNew = false;
     for (const searchEntry of searchResult) {
       if (!newCommunications.some((c) => c.id === searchEntry.id)) {
         newCommunications.push(searchEntry as Communication);
+        foundNew = true;
       }
     }
 
-    // Sort by "sent" date/time
-    newCommunications.sort((a, b) => (a.sent as string).localeCompare(b.sent as string));
-
-    setCommunications(newCommunications);
-  }, [medplum, profileRefStr, communications, setCommunications]);
+    if (foundNew) {
+      console.log('found new messages');
+      newCommunications.sort((a, b) => (a.meta?.lastUpdated as string).localeCompare(b.meta?.lastUpdated as string));
+      setCommunications(newCommunications);
+      scrollToBottom.current = true;
+    }
+  }
 
   const sendMessage = useCallback(
     async (formData: Record<string, string>) => {
       if (inputRef.current) {
         inputRef.current.value = '';
       }
-      //
+      const profile = medplum.getProfile() as ProfileResource;
       const message = formData.message;
       const communication = await medplum.createResource<Communication>({
         resourceType: 'Communication',
@@ -119,28 +133,30 @@ export function Chat(): JSX.Element | null {
         sent: new Date().toISOString(),
         payload: [{ contentString: message }],
       });
-      console.log('communication', communication);
       setCommunications([...communications, communication]);
+      scrollToBottom.current = true;
     },
-    [medplum, profile, communications, setCommunications]
+    [medplum, communications, setCommunications]
   );
 
   useEffect(() => {
-    // Initial search:
     searchMessages().catch((err) => showNotification({ color: 'red', message: normalizeErrorString(err) }));
-
-    // Search on timer:
     const timer = setInterval(() => {
-      // if (open) {
-      console.log('timer tick');
       searchMessages().catch((err) => showNotification({ color: 'red', message: normalizeErrorString(err) }));
-      // }
     }, 1000);
-
     return () => clearInterval(timer);
-  }, [searchMessages]);
+  }, [medplum]);
 
-  if (!profile) {
+  useEffect(() => {
+    if (scrollToBottom.current) {
+      if (scrollAreaRef.current) {
+        scrollAreaRef.current.scrollTo({ top: scrollAreaRef.current.scrollHeight, behavior: 'smooth' });
+      }
+      scrollToBottom.current = false;
+    }
+  }, undefined);
+
+  if (!medplum.getProfile()) {
     return null;
   }
 
@@ -151,15 +167,15 @@ export function Chat(): JSX.Element | null {
           <Paper className={classes.chatPaper} shadow="xl" p={0} radius="md" withBorder>
             <div className={classes.chatTitle}>Chat with GPT</div>
             <div className={classes.chatBody}>
-              <ScrollArea className={classes.chatScrollArea}>
+              <ScrollArea viewportRef={scrollAreaRef} className={classes.chatScrollArea}>
                 {communications.map((c) =>
-                  c.sender?.reference === profileRefStr ? (
-                    <Group key={c.id} position="right" spacing="xs" mb="sm">
+                  c.sender?.reference === getReferenceString(medplum.getProfile() as ProfileResource) ? (
+                    <Group key={c.id} position="right" align="flex-start" spacing="xs" mb="sm" noWrap>
                       <Text>{c.payload?.[0]?.contentString}</Text>
                       <Avatar radius="xl" color="orange" />
                     </Group>
                   ) : (
-                    <Group key={c.id} spacing="xs" mb="sm">
+                    <Group key={c.id} align="flex-start" spacing="xs" mb="sm" noWrap>
                       <Avatar radius="xl" color="teal" />
                       <Text>{c.payload?.[0]?.contentString}</Text>
                     </Group>
@@ -209,7 +225,10 @@ export function Chat(): JSX.Element | null {
         size="lg"
         radius="xl"
         variant="outline"
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          setOpen(true);
+          scrollToBottom.current = true;
+        }}
       >
         <IconMessage size="1.625rem" />
       </ActionIcon>

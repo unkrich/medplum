@@ -1,10 +1,11 @@
-import { ActionIcon, Avatar, createStyles, Group, Paper, ScrollArea, Text, TextInput } from '@mantine/core';
+import { ActionIcon, Avatar, createStyles, Group, Paper, ScrollArea, TextInput } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 import { createReference, getReferenceString, normalizeErrorString, ProfileResource } from '@medplum/core';
 import { Communication, Practitioner, Reference } from '@medplum/fhirtypes';
-import { Form, useMedplum } from '@medplum/react';
+import { Form, MedplumLink, useMedplum } from '@medplum/react';
 import { IconArrowRight, IconChevronDown, IconMessage } from '@tabler/icons-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 
 const CHAT_GPT: Reference<Practitioner> = {
   reference: 'Practitioner/cc358e24-aadd-4a3c-9d9d-99fb06904d26',
@@ -29,7 +30,7 @@ const useStyles = createStyles((theme) => ({
     bottom: '3rem',
     right: '0.5rem',
     zIndex: 100,
-    width: '360px',
+    width: '400px',
     height: '450px',
     maxHeight: '450px',
     overflow: 'hidden',
@@ -38,7 +39,7 @@ const useStyles = createStyles((theme) => ({
   },
 
   chatPaper: {
-    width: '360px',
+    width: '400px',
     height: '450px',
     display: 'flex',
     flexDirection: 'column',
@@ -63,7 +64,6 @@ const useStyles = createStyles((theme) => ({
   },
 
   chatScrollArea: {
-    height: '100%',
     padding: theme.spacing.xs,
   },
 
@@ -71,6 +71,23 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: theme.colors.gray[0],
     borderRadius: `0 0 ${theme.radius.md} ${theme.radius.md}`,
     padding: '4px 4px',
+  },
+
+  chatBubble: {
+    backgroundColor: theme.colors.gray[0],
+    borderRadius: theme.radius.lg,
+    padding: theme.spacing.sm,
+    maxWidth: '300px',
+
+    '& p': {
+      marginTop: '0.25rem',
+      marginBottom: '0.25rem',
+    },
+
+    '& pre': {
+      maxWidth: '280px',
+      overflow: 'auto',
+    },
   },
 }));
 
@@ -84,6 +101,9 @@ export function Chat(): JSX.Element | null {
 
   const communicationsRef = useRef<Communication[]>();
   communicationsRef.current = communications;
+
+  const openRef = useRef<boolean>();
+  openRef.current = open;
 
   const scrollToBottom = useRef<boolean>(false);
 
@@ -110,7 +130,6 @@ export function Chat(): JSX.Element | null {
     }
 
     if (foundNew) {
-      console.log('found new messages');
       newCommunications.sort((a, b) => (a.meta?.lastUpdated as string).localeCompare(b.meta?.lastUpdated as string));
       setCommunications(newCommunications);
       scrollToBottom.current = true;
@@ -142,7 +161,9 @@ export function Chat(): JSX.Element | null {
   useEffect(() => {
     searchMessages().catch((err) => showNotification({ color: 'red', message: normalizeErrorString(err) }));
     const timer = setInterval(() => {
-      searchMessages().catch((err) => showNotification({ color: 'red', message: normalizeErrorString(err) }));
+      if (!document.hidden && openRef.current) {
+        searchMessages().catch((err) => showNotification({ color: 'red', message: normalizeErrorString(err) }));
+      }
     }, 1000);
     return () => clearInterval(timer);
   }, [medplum]);
@@ -167,17 +188,17 @@ export function Chat(): JSX.Element | null {
           <Paper className={classes.chatPaper} shadow="xl" p={0} radius="md" withBorder>
             <div className={classes.chatTitle}>Chat with GPT</div>
             <div className={classes.chatBody}>
-              <ScrollArea viewportRef={scrollAreaRef} className={classes.chatScrollArea}>
+              <ScrollArea viewportRef={scrollAreaRef} className={classes.chatScrollArea} w={400} h={360}>
                 {communications.map((c) =>
                   c.sender?.reference === getReferenceString(medplum.getProfile() as ProfileResource) ? (
                     <Group key={c.id} position="right" align="flex-start" spacing="xs" mb="sm" noWrap>
-                      <Text>{c.payload?.[0]?.contentString}</Text>
+                      <ChatBubble communication={c} />
                       <Avatar radius="xl" color="orange" />
                     </Group>
                   ) : (
                     <Group key={c.id} align="flex-start" spacing="xs" mb="sm" noWrap>
                       <Avatar radius="xl" color="teal" />
-                      <Text>{c.payload?.[0]?.contentString}</Text>
+                      <ChatBubble communication={c} />
                     </Group>
                   )
                 )}
@@ -232,6 +253,31 @@ export function Chat(): JSX.Element | null {
       >
         <IconMessage size="1.625rem" />
       </ActionIcon>
+    </div>
+  );
+}
+
+interface ChatBubbleProps {
+  communication: Communication;
+}
+
+function ChatBubble(props: ChatBubbleProps): JSX.Element {
+  const { classes } = useStyles();
+  let markdown = props.communication.payload?.[0]?.contentString || '';
+
+  // Wrap FHIR URL's in the format of "[baseurl]/[resource]/[id]" with markdown link
+  // markdown = markdown.replace(/\[baseurl](/[^\s]+)/g, '[$1]($1)');
+  markdown = markdown.replace(/`*\[(base|baseurl)\](\/[^\s`]+)`*/g, '[$2]($2)');
+
+  return (
+    <div className={classes.chatBubble}>
+      <ReactMarkdown
+        components={{
+          a: ({ node, href, children }) => <MedplumLink to={href}>{children}</MedplumLink>,
+        }}
+      >
+        {markdown}
+      </ReactMarkdown>
     </div>
   );
 }
